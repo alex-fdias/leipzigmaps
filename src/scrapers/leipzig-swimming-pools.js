@@ -2,11 +2,14 @@ import scrapeIt from "scrape-it";
 import fs from 'fs';
 import { search } from "../../lib/nominatim.mjs";
 
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
 const domain = `https://www.leipzig.de`;
 const url_indoor_pool = `${domain}/freizeit-kultur-und-tourismus/sport/sportstaetten/schwimmhallen`;
 const url_outdoor_pool = `${domain}/freizeit-kultur-und-tourismus/sport/sportstaetten/freibaeder`;
 
-const __dirname = new URL('.', import.meta.url).pathname;
+const save_dir = join(dirname(fileURLToPath(import.meta.url)), '../..', 'public/data');
 
 Promise.all([scrapeIt(url_indoor_pool, {
     list: {
@@ -73,5 +76,5 @@ Promise.all([scrapeIt(url_indoor_pool, {
     newList.push(element)
   }
 
-  fs.writeFileSync(`${__dirname}../../public/data/leipzig-swimming-pools.json`, JSON.stringify(newList, null, 2), 'utf8')
+  fs.writeFileSync(join(save_dir, `leipzig-swimming-pools.json`), JSON.stringify(newList, null, 2), 'utf8')
 })
