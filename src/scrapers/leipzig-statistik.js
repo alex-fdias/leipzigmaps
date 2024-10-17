@@ -35,7 +35,7 @@ const urls = [
   console.error(err);
   }
 
-  const num_digits = Math.ceil(Math.log10(urls.length))
+  const num_digits = Math.floor(Math.log10(urls.length))+1
   for (let i = 0; i < urls.length; i++) {
     const response = await fetch(urls[i]);
     process.stdout.write('[' + String(i+1).padStart(num_digits, '0') + '/' + urls.length + '] \"' + urls[i] + '\": ')
